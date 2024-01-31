@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement; 
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,17 +11,23 @@ public class PlayerMovement : MonoBehaviour
     public float minX;
     public float maxX;
     public float minY = -5f;
-    public int health = 5;
-    private Rigidbody2D rb;
-
+    public TextMeshProUGUI heartCountText;
+    
     [SerializeField]
     private GameObject map;
+    private Rigidbody2D rb;
     private bool start_end = false;
     private bool isColliding = false;
+    private int health;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        health = PlayerPrefs.GetInt("health", 2);
+        for (int i = 0; i < health; i++)
+        {
+            heartCountText.text += "\u2665";
+        }
     }
 
     void FixedUpdate()
@@ -87,11 +94,13 @@ public class PlayerMovement : MonoBehaviour
         health -= 1;
         if (health > 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+            PlayerPrefs.SetInt("health", health);
         }
         else
         {
             SceneManager.LoadScene("GameOverScene");
+            PlayerPrefs.DeleteAll();
         }
         
     }
