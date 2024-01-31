@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        health = PlayerPrefs.GetInt("health", 5);
+        health = PlayerPrefs.GetInt("health", 3);
         for (int i = 0; i < health; i++)
         {
             heartCountText.text += "\u2665";
@@ -78,6 +78,11 @@ public class PlayerMovement : MonoBehaviour
         {
             start_end = true;
         }
+        if (collision.gameObject.CompareTag("Star"))
+        {
+            Destroy(collision.gameObject);
+            score += 1;
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -103,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             SceneManager.LoadScene("GameOverScene");
-            PlayerPrefs.DeleteAll();
+            PlayerPrefs.SetInt("score", score);
         }
         
     }
