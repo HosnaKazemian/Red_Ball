@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; 
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,16 +10,24 @@ public class PlayerMovement : MonoBehaviour
     public float jump = 0.8f;
     public float minX;
     public float maxX;
-    private Rigidbody2D rb;
-
+    public float minY = -5f;
+    public TextMeshProUGUI heartCountText;
+    
     [SerializeField]
     private GameObject map;
+    private Rigidbody2D rb;
     private bool start_end = false;
     private bool isColliding = false;
+    private int health;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        health = PlayerPrefs.GetInt("health", 2);
+        for (int i = 0; i < health; i++)
+        {
+            heartCountText.text += "\u2665";
+        }
     }
 
     void FixedUpdate()
@@ -47,6 +57,12 @@ public class PlayerMovement : MonoBehaviour
 
             transform.Rotate(0, 0, 11f);
         }
+        
+        // Check if the ball falls below the specified y-coordinate
+        if (transform.position.y < minY)
+        {
+            looseGame();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -72,4 +88,21 @@ public class PlayerMovement : MonoBehaviour
             start_end = false;
         }
     }
+    
+    private void looseGame()
+    {
+        health -= 1;
+        if (health > 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+            PlayerPrefs.SetInt("health", health);
+        }
+        else
+        {
+            SceneManager.LoadScene("GameOverScene");
+            PlayerPrefs.DeleteAll();
+        }
+        
+    }
+    
 }
