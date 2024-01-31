@@ -10,10 +10,12 @@ public class PlayerMovement : MonoBehaviour
     public float jump = 0.8f;
     public float minX;
     public float maxX;
-    public float minY = -5f;
+    public float minY = -3f;
     public TextMeshProUGUI heartCountText;
     public TextMeshProUGUI scoreText;
-    
+    public AudioClip starSound;
+    public AudioClip fallingSound;
+    private AudioSource audioSource;
     [SerializeField]
     private GameObject map;
     private int score = 0;
@@ -25,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
         health = PlayerPrefs.GetInt("health", 3);
         for (int i = 0; i < health; i++)
         {
@@ -62,7 +65,12 @@ public class PlayerMovement : MonoBehaviour
         }
         
         // Check if the ball falls below the specified y-coordinate
-        if (transform.position.y < minY)
+        if (minY - 0.5 < transform.position.y &&  transform.position.y < minY)
+        {
+            audioSource.clip = fallingSound;
+            audioSource.Play();
+        }
+        if (transform.position.y < minY - 30)
         {
             looseGame();
         }
@@ -80,6 +88,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Star"))
         {
+            audioSource.clip = starSound;
+            audioSource.Play();
             Destroy(collision.gameObject);
             score += 1;
         }
