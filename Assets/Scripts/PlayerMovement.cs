@@ -12,9 +12,11 @@ public class PlayerMovement : MonoBehaviour
     public float maxX;
     public float minY = -5f;
     public TextMeshProUGUI heartCountText;
+    public TextMeshProUGUI scoreText;
     
     [SerializeField]
     private GameObject map;
+    private int score = 0;
     private Rigidbody2D rb;
     private bool start_end = false;
     private bool isColliding = false;
@@ -23,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        health = PlayerPrefs.GetInt("health", 2);
+        health = PlayerPrefs.GetInt("health", 3);
         for (int i = 0; i < health; i++)
         {
             heartCountText.text += "\u2665";
@@ -32,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        scoreText.text = "score: " + score.ToString();
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
 
@@ -75,6 +78,11 @@ public class PlayerMovement : MonoBehaviour
         {
             start_end = true;
         }
+        if (collision.gameObject.CompareTag("Star"))
+        {
+            Destroy(collision.gameObject);
+            score += 1;
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -100,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             SceneManager.LoadScene("GameOverScene");
-            PlayerPrefs.DeleteAll();
+            PlayerPrefs.SetInt("score", score);
         }
         
     }
