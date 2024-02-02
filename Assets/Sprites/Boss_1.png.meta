@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 762001ed007770840b3facb5b4469903
+guid: a9117bbe0f5d5b84ea239c6bb538ab74
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,64 +110,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Level_02_0
+      name: Boss_1_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1185
-        width: 1626
-        height: 584
+        x: 415
+        y: 532
+        width: 92
+        height: 98
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 7, z: 0, w: 0}
+      border: {x: 1, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23e4a9ac186b5104eb4e1ba049321dcf
-      internalID: 1894638569
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Level_02_1
-      rect:
-        serializedVersion: 2
-        x: 6
-        y: 599
-        width: 1714
-        height: 569
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fe5f49e0e60568d4db842104abd2ebf3
-      internalID: 1940833278
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Level_02_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1660
-        height: 573
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4f08eb4e9b753c549829ec0a350a90a8
-      internalID: 64279331
+      spriteID: 97799dce0bb02944dbd0713eff7451dc
+      internalID: 516218819
       vertices: []
       indices: 
       edges: []
@@ -183,11 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Level_02_0: 1894638569
-      Level_02_1: 1940833278
-      Level_02_2: 64279331
-      Level_02_3: 2078485578
-      Level_02_4: -686687135
+      Boss_1_0: 516218819
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
