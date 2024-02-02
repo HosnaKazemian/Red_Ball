@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public AudioClip starSound;
     public AudioClip fallingSound;
+    public AudioClip killingSound;
     private AudioSource audioSource;
     [SerializeField]
     private GameObject map;
@@ -85,6 +86,12 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Finish"))
         {
             winGame();
+        }
+        if (collision.gameObject.CompareTag("Boss"))
+        {
+            audioSource.clip = killingSound;
+            audioSource.Play();
+            Invoke("looseGame", 0.3f);
         }
         if (collision.gameObject.CompareTag("Obstacle"))
         {

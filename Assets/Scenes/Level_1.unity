@@ -1913,6 +1913,7 @@ MonoBehaviour:
   scoreText: {fileID: 171978644}
   starSound: {fileID: 8300000, guid: 9471e3a27b9028847a11896193a0a608, type: 3}
   fallingSound: {fileID: 8300000, guid: 42b8f49959cd22b4ca87a8a2b5952f8c, type: 3}
+  killingSound: {fileID: 8300000, guid: e6299b381c3e84b43b89e5e87e046344, type: 3}
   map: {fileID: 1413644904}
 --- !u!58 &1504150193
 CircleCollider2D:
