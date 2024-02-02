@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BossMovement : MonoBehaviour
 {
-    private bool isColliding = false;
     public float moveSpeed = 7f;
     private Rigidbody2D rb;
 
@@ -15,21 +14,17 @@ public class BossMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector2 velocity = new Vector2(-moveSpeed, 0f);
+        Vector2 velocity = new Vector2(moveSpeed, 0f);
         rb.MovePosition(rb.position + velocity * Time.deltaTime);
-
-        if(isColliding)
-        {
-            moveSpeed = -moveSpeed;
-            isColliding = false;
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle"))
+        if (collision.gameObject)
         {
-            isColliding = true;
+            moveSpeed = -moveSpeed;
+            Vector2 new_position = new Vector2(moveSpeed / 10, 0f);
+            rb.MovePosition(rb.position + new_position);
         }
     }
 }
