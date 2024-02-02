@@ -5,12 +5,14 @@ using TMPro;
 
 public class gameover : MonoBehaviour
 {
-    private int score = 0;
+    private int score;
+	private string status;
     void Start()
     {
         score = PlayerPrefs.GetInt("score", 0);
+		status = PlayerPrefs.GetString("status", "Game Over");
         TextMeshProUGUI gameOverText = GetComponent<TextMeshProUGUI>();
-        gameOverText.text = "GAME OVER\n Score: " + score.ToString();
+        gameOverText.text = status + "\n Score: " + score.ToString();
         PlayerPrefs.DeleteAll();
     }
 
