@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossMovement : MonoBehaviour
 {
     private bool isColliding = false;
-    public float moveSpeed = 10f;
+    public float moveSpeed = 7f;
     private Rigidbody2D rb;
 
     void Start()
