@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement; 
 using TMPro;
+using System.Text.RegularExpressions;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -18,17 +19,20 @@ public class PlayerMovement : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField]
     private GameObject map;
-    private int score = 0;
+    private int score;
     private Rigidbody2D rb;
     private bool start_end = false;
     private bool isColliding = false;
     private int health;
+
+    private int numberOfLevels = 2;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
         health = PlayerPrefs.GetInt("health", 3);
+        score = PlayerPrefs.GetInt("score", 0);
         for (int i = 0; i < health; i++)
         {
             heartCountText.text += "\u2665";
@@ -78,6 +82,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            winGame();
+        }
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             isColliding = true;
@@ -112,15 +120,35 @@ public class PlayerMovement : MonoBehaviour
         health -= 1;
         if (health > 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
             PlayerPrefs.SetInt("health", health);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
         }
         else
         {
-            SceneManager.LoadScene("GameOverScene");
             PlayerPrefs.SetInt("score", score);
+            PlayerPrefs.SetString("status", "Game Over");
+            SceneManager.LoadScene("EndScene");
         }
         
     }
-    
+
+    private void winGame()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+        string numericPart = Regex.Match(sceneName, @"\d+").Value;
+        int levelNumber = int.Parse(numericPart);
+
+        if (levelNumber < numberOfLevels)
+        {
+            PlayerPrefs.SetInt("score", score);
+            SceneManager.LoadScene("Level_" + (levelNumber + 1).ToString());
+        }
+        else
+        {
+            PlayerPrefs.SetInt("score", score);
+            PlayerPrefs.SetString("status", "You Won!");
+            SceneManager.LoadScene("EndScene");
+        }
+    }
 }
